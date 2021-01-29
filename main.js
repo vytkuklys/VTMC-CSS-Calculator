@@ -10,9 +10,9 @@ btns.addEventListener("click", (event) => {
     }
 });
 
-function applyToScreen(value){
+function applyToScreen(value) {
     let display = "";
-    switch (value){
+    switch (value) {
         case "AC":
             display = "0";
             symbol = "";
@@ -22,11 +22,12 @@ function applyToScreen(value){
         case "DEL":
             display = screen.textContent;
             display = display.slice(0, -1);
-            (display == false || display === "0") ? display = "0" : display = display;
+            (display == false || display === "0") ? display = "0": display = display;
             screen.textContent = display;
             break;
         case "/":
-            if(parseFloat(screen.textContent) == parseFloat(screen.textContent)){
+            //if statement to prevent NaN from being calculated
+            if (parseFloat(screen.textContent) == parseFloat(screen.textContent)) {
                 prevNr = parseFloat(screen.textContent);
             }
             symbol = "/";
@@ -34,7 +35,7 @@ function applyToScreen(value){
             screen.textContent = display;
             break;
         case "*":
-            if(parseFloat(screen.textContent) == parseFloat(screen.textContent)){
+            if (parseFloat(screen.textContent) == parseFloat(screen.textContent)) {
                 prevNr = parseFloat(screen.textContent);
             }
             symbol = "*";
@@ -42,7 +43,7 @@ function applyToScreen(value){
             screen.textContent = display;
             break;
         case "-":
-            if(parseFloat(screen.textContent) == parseFloat(screen.textContent)){
+            if (parseFloat(screen.textContent) == parseFloat(screen.textContent)) {
                 prevNr = parseFloat(screen.textContent);
             }
             symbol = "-";
@@ -50,7 +51,7 @@ function applyToScreen(value){
             screen.textContent = display;
             break;
         case "+":
-            if(parseFloat(screen.textContent) == parseFloat(screen.textContent)){
+            if (parseFloat(screen.textContent) == parseFloat(screen.textContent)) {
                 prevNr = parseFloat(screen.textContent);
             }
             symbol = "+";
@@ -59,55 +60,60 @@ function applyToScreen(value){
             break;
         case "=":
             display = screen.textContent;
-            console.log(symbol)
-            switch (symbol){
-                case "*":
-                    display = prevNr * parseFloat(screen.textContent);
-                    break;
-                case "/":
-                    display = prevNr / parseFloat(screen.textContent);
-                    break;
-                case "-":
-                    display = prevNr - parseFloat(screen.textContent);
-                    break;
-                case "+":
-                    display = prevNr + parseFloat(screen.textContent);
-                    break;
-                default:
-                    break;
+            if(parseFloat(screen.textContent) === parseFloat(screen.textContent)){
+                switch (symbol) {
+                    case "*":
+                        display = prevNr * parseFloat(screen.textContent);
+                        break;
+                    case "/":
+                        display = prevNr / parseFloat(screen.textContent);
+                        break;
+                    case "-":
+                        display = prevNr - parseFloat(screen.textContent);
+                        break;
+                    case "+":
+                        display = prevNr + parseFloat(screen.textContent);
+                        break;
+                    default:
+                        break;
             }
             screen.textContent = display;
             symbol = "";
             reset = true;
+            }
             break;
         case ".":
             display = value;
-            let tmpArr = screen.textContent.split("");
-            let count = 0;
-            console.log(tmpArr)
-            tmpArr.forEach(element => {
-                (element.localeCompare(".") === 0) ? count ++ : "";
-            });
-            if(!(count > 0)){
-                screen.textContent += display;
+            if (!reset && parseFloat(screen.textContent) === parseFloat(screen.textContent)) {
+                let tmpArr = screen.textContent.split("");
+                let count = 0;
+                tmpArr.forEach(element => {
+                    (element.localeCompare(".") === 0) ? count++ : "";
+                });
+                if (!(count > 0)) {
+                    screen.textContent += display;
+                }
+            }else{
+                screen.textContent = "0."
+                reset = false;
             }
+
             break;
         default:
             display = value;
-            console.log(screen.textContent, "sitas")
-            if(screen.textContent.length > 1 || parseFloat(screen.textContent) > 0){
-                if(!reset){
+            if (screen.textContent.length > 1 || parseFloat(screen.textContent) > 0) {
+                if (!reset) {
                     screen.textContent += display;
-                }else{
+                } else {
                     reset = false;
                     screen.textContent = display;
                     prevNr = "";
                 }
-            }else if(screen.textContent === "0"){
+            } else if (screen.textContent === "0") {
                 screen.textContent = display;
-            }else if(typeof screen.textContent !== 'number'){
+            } else if (typeof screen.textContent !== 'number') {
                 screen.textContent = display;
+                reset = false;
             }
     }
 }
-

@@ -24,6 +24,8 @@ body{
     border-radius: .5rem;
     padding: .35rem;
     border: .1rem solid #012880;
+    box-shadow: 0 9px 8px 3px rgba(0,0,0,0.43);
+
 }
 .calculator__hr{
     background-color: #17c4d3;
@@ -63,16 +65,21 @@ button {
     color: #ffffff;
 	border: 1px solid #012880;
     background-image: linear-gradient(-180deg, #17c4d3 0%, #18a1ad 100%);
-    transition: transform 50ms linear;
+    transition: transform 75ms linear, border 75ms linear;
+    outline: none;
 }
 button span {
     font-weight: 500;
     pointer-events: none;
 } 
 button:hover{
-    transform: scale(.98);
-    border: .175rem solid #012880;
+    transform: scale(.985);
+    border: .16rem solid #012880;
 
+}
+button:active{
+    transform: scale(.975);
+    border: .175rem solid #012880;
 }
 .calculator-functions{
     display: grid;
